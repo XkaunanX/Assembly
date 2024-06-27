@@ -1,0 +1,78 @@
+;MANIPULACION DE BITS
+
+org 100  
+
+;CONFIGURO UN O EN LA POSICION 3
+
+mov AX,1011B ;ASIGNO 1011B EN AX
+
+mov BX,1     ;ASIGNO 1 EN BX
+
+shl BX,3     ;MUEVO LOS BITS A LA IZQUIERDA 3 LUGARES
+
+not BX       ;NIEGO TODOS LOS BITS DE BX
+
+and AX,BX    ;AX AND BX -> LO GUARDO EN AX
+
+;CONFIGURO UN 1 EN LA POSICION 3
+
+mov AX,1011B ;ASIGNO 1011B EN AX
+
+mov BX,1     ;ASIGNO 1 EN BX
+
+shl BX,3     ;MUEVO LOS BITS A LA IZQUIERDA 3 LUGARES
+
+or AX,BX     ;AX OR BX -> LO GUARDO EN AX  
+
+;COMPROBAR SI UN BIT ESTA ACTIVO
+
+mov AX,1011B ;ASIGNO 1011B EN AX
+            
+mov BX,1     ;ASIGNO 1H EN BX
+
+shl BX,3     ;MUEVO LOS BITS 3 LUGARES A LA IZQUIERDA
+
+and AX,BX    ;AX AND BX
+
+cmp AX,0     ;COMPARO AX CON 0
+
+jz bit_inactive  ;SALTA SI EL BIT ESTA INACTIVO
+
+mov AX,1FFFH     ;EL BIT ESTA ACTIVO
+
+bit_inactive: 
+
+mov AX,0011H     ;EL BIT NO ESTA ACTIVO
+
+;COMPROBAR SI UN BIT ESTA INACTIVO
+
+mov AX,1011B
+
+mov BX,1
+
+shl BX,3
+
+not BX
+
+and AX,BX
+
+cmp AX,0
+
+jz bit_inactivated
+
+mov AX,1CCCH
+
+bit_inactivated:
+
+mov AX,1DDDH
+
+;INVERTIR UN BIT ESPECIFICO
+
+mov AX,1011B
+
+mov BX,1
+
+shl BX,3
+
+xor AX,BX
+

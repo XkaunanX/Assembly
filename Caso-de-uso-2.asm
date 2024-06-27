@@ -1,0 +1,20 @@
+
+ORG 100H
+
+MOV BX,1FA0h
+
+MOV AX,[BX]
+
+MOV BX,[1FA2H]
+
+ADD AX,[BX]
+   
+LEA DX,MSG
+
+MOV AH,09H
+
+INT 21H   
+   
+RET
+
+MSG DB 'FINALIZADO$'
