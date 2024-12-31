@@ -29,8 +29,9 @@ matrix db 1, 2, 3, 4, 5, 6    ; 2 filas, 3 columnas (en memoria como un arreglo 
 mov si, 0                     ; Registro SI para la fila
 mov di, 2                     ; Registro DI para el indice de columna
 mov al, [matrix + si + di]    ; Accediendo al elemento en fila=0, columna=2
-En el ejemplo, accedemos al elemento en la primera fila y segunda columna utilizando la formula [matriz + (fila * numero_de_columnas) + columna].
 ```
+En el ejemplo, accedemos al elemento en la primera fila y segunda columna utilizando la formula [matriz + (fila * numero_de_columnas) + columna].
+
 Puedes ajustar los registros SI y DI para recorrer todos los elementos de la matriz.
 
 ## La Directiva db:
@@ -40,5 +41,5 @@ Ejemplo:
 ```assembly
 data1 db 10     ; Un solo byte con valor 10
 vector db 1, 2, 3  ; Un vector de 3 bytes
-Cada valor definido usando db ocupa un byte de memoria. Si deseas almacenar tipos de datos mas grandes, como palabras (2 bytes) o doble palabra (4 bytes), debes usar dw o dd, respectivamente.
 ```
+Cada valor definido usando db ocupa un byte de memoria. Si deseas almacenar tipos de datos mas grandes, como palabras (2 bytes) o doble palabra (4 bytes), debes usar dw o dd, respectivamente.
