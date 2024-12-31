@@ -1,0 +1,1 @@
+IN AL, 60h   ; Lee un byte del puerto 60h al registro AL
