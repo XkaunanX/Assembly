@@ -29,7 +29,9 @@ matrix db 1, 2, 3, 4, 5, 6    ; 2 filas, 3 columnas (en memoria como un arreglo 
 mov si, 0                     ; Registro SI para la fila
 mov di, 2                     ; Registro DI para el indice de columna
 mov al, [matrix + si + di]    ; Accediendo al elemento en fila=0, columna=2
-En el ejemplo, accedemos al elemento en la primera fila y segunda columna utilizando la formula [matriz + (fila * numero_de_columnas) + columna]. ```Puedes ajustar los registros SI y DI para recorrer todos los elementos de la matriz.
+En el ejemplo, accedemos al elemento en la primera fila y segunda columna utilizando la formula [matriz + (fila * numero_de_columnas) + columna].
+```
+Puedes ajustar los registros SI y DI para recorrer todos los elementos de la matriz.
 
 ## La Directiva db:
 La directiva db (define byte) se utiliza para definir datos de tamaño byte en el segmento de datos. Esto se puede usar para definir valores escalares (por ejemplo, enteros, caracteres), vectores, matrices y otros tipos de datos en memoria.
