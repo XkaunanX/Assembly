@@ -43,8 +43,6 @@ Para verificar el estado de bits específicos, se utiliza la operación **AND** 
 - Máscara: `00001000` (0x08)
 - Resultado: `00001000` (0x08) → El bit está activo.
 
----
-
 ## Máscaras Comunes
 ### Máscara de 8 bits
 Supongamos que se desea manipular el registro **AL** (8 bits):
@@ -58,8 +56,6 @@ Si se trabaja con un registro de 16 bits como **AX**:
 
 - Máscara para activar los bits 15 y 14: `1100000000000000` (0xC000 en hexadecimal).
 - Máscara para desactivar los bits 7 y 0: `1111111011111110` (0xFEFE en hexadecimal).
-
----
 
 ## Instrucciones Relacionadas y su Uso
 
@@ -97,8 +93,6 @@ Realizan desplazamientos lógicos a la izquierda o derecha, respectivamente.
 Rotan los bits de un operando a la izquierda o derecha.
 - **Ejemplo ROL:** `ROL AX, 1` (Rota los bits de AX una vez a la izquierda).
 - **Ejemplo ROR:** `ROR AX, 1` (Rota los bits de AX una vez a la derecha).
-
----
 
 ## Notas Adicionales
 1. **Combinación de Operaciones:** Las máscaras pueden ser combinadas con múltiples operadores lógicos para realizar operaciones complejas en registros o memoria.
