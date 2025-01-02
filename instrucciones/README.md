@@ -208,3 +208,57 @@ NOT operando
 
 Ejemplo:
 NOT AX ; Invierte los bits de AX
+
+# Uso de Máscaras en Assembly 8086
+
+Este documento describe el concepto y uso de máscaras en el lenguaje ensamblador del procesador 8086.
+
+# ¿Qué es una Máscara?
+Una máscara es un valor binario utilizado para manipular bits específicos de un registro o una posición de memoria. Las máscaras se emplean comúnmente para realizar operaciones de:
+
+- **Activación de bits:** Establecer uno o más bits en 1.
+- **Desactivación de bits:** Establecer uno o más bits en 0.
+- **Conmutación de bits:** Cambiar el estado de uno o más bits (de 1 a 0 o de 0 a 1).
+- **Prueba de bits:** Verificar si uno o más bits están en un estado específico.
+
+## Operaciones Comunes con Máscaras
+Las máscaras se utilizan junto con operadores lógicos en ensamblador:
+
+### 1. Activación de Bits
+Para activar bits específicos, se utiliza la operación **OR** (`OR`):
+
+- Máscara: Los bits que se quieren activar se establecen en 1.
+- Resultado: Los bits en la posición 1 de la máscara se activan (1), mientras que los demás permanecen sin cambios.
+
+### 2. Desactivación de Bits
+Para desactivar bits específicos, se utiliza la operación **AND** (`AND`) con el complemento de la máscara:
+
+- Máscara: Los bits que se quieren desactivar se establecen en 0.
+- Resultado: Los bits en la posición 0 de la máscara se desactivan (0), mientras que los demás permanecen sin cambios.
+
+### 3. Conmutación de Bits
+Para cambiar el estado de bits específicos, se utiliza la operación **XOR** (`XOR`):
+
+- Máscara: Los bits que se quieren conmutar se establecen en 1.
+- Resultado: Los bits en la posición 1 de la máscara cambian su estado, mientras que los demás permanecen sin cambios.
+
+### 4. Prueba de Bits
+Para comprobar el estado de bits específicos, se utiliza la operación **AND** (`AND`):
+
+- Máscara: Los bits que se quieren comprobar se establecen en 1.
+- Resultado: Si el resultado es distinto de 0, los bits estaban activos.
+
+## Ejemplo de Máscaras Comunes
+
+### Máscara de 8 bits
+Supongamos que se desea manipular el registro **AL** (8 bits):
+
+- Máscara para activar los bits 0 y 3: `00001001` (0x09 en hexadecimal).
+- Máscara para desactivar los bits 1 y 2: `11111011` (0xFB en hexadecimal).
+- Máscara para conmutar los bits 7 y 6: `11000000` (0xC0 en hexadecimal).
+
+### Máscara de 16 bits
+Si se trabaja con un registro de 16 bits como **AX**:
+
+- Máscara para activar los bits 15 y 14: `1100000000000000` (0xC000 en hexadecimal).
+- Máscara para desactivar los bits 7 y 0: `1111111011111110` (0xFEFE en hexadecimal).
