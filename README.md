@@ -1,30 +1,51 @@
 # Assembly
+Assembly es un lenguaje de programación de bajo nivel que traduce directamente a las instrucciones ejecutables por el procesador. Cada instrucción en assembly corresponde a una operación específica que el hardware puede realizar. Es usado para obtener un control preciso sobre el hardware y optimizar el rendimiento.
 
-## Que es Assembly 8086?
+## Tamaño de Registros
+En el procesador 8086, los registros son de 16 bits, aunque algunos se pueden dividir en partes de 8 bits:
 
-Assembly 8086 es un lenguaje de bajo nivel que se utiliza para programar en la arquitectura de la CPU 8086, desarrollada por Intel en 1978. Esta arquitectura fue una de las primeras en soportar un conjunto de instrucciones de 16 bits, lo que le permitio manejar datos de manera mas eficiente que las arquitecturas de 8 bits previas.
+- **Registros de datos:** AX (AH/AL), BX (BH/BL), CX (CH/CL), DX (DH/DL).
+- **Registros de puntero e índice:** SP (Stack Pointer), BP (Base Pointer), SI (Source Index), DI (Destination Index).
+- **Registros de segmento:** CS (Code Segment), DS (Data Segment), SS (Stack Segment), ES (Extra Segment).
+- **Registro de estado:** FLAGS, que contiene indicadores como Zero Flag (ZF), Carry Flag (CF), etc.
 
-## Caracteristicas principales del Assembly 8086:
+Cada registro tiene un tamaño de 16 bits, permitiendo manejar valores entre 0 y 65,535 en decimal o 0x0000 a 0xFFFF en hexadecimal.
 
-- **Conjunto de instrucciones simple**: Permite a los programadores interactuar directamente con la memoria y los registros del procesador.
-- **Registros de 16 bits**: La CPU 8086 tiene registros como AX, BX, CX, DX, etc., que se utilizan para almacenar datos y direcciones.
-- **Segmentacion de memoria**: La memoria se divide en segmentos como codigo, datos y pila, lo que permite gestionar mejor la memoria.
+## CISC
+El 8086 pertenece a la arquitectura **CISC** (*Complex Instruction Set Computer*). Sus características principales son:
 
-## Que es el emulador emu8086?
+- **Conjunto de instrucciones extenso:** Permite realizar operaciones complejas con pocas instrucciones.
+- **Modos de direccionamiento variados:** Directo, indirecto, basado en registros, indexado, entre otros.
+- **Ciclos de instrucción variables:** Dependiendo de la complejidad de cada instrucción.
+- **Acceso directo a memoria:** Permite trabajar con datos almacenados en memoria sin moverlos a registros intermedios.
 
-**emu8086** es un emulador para la CPU 8086 que permite a los programadores escribir y ejecutar programas en Assembly 8086 en sistemas modernos. Este emulador simula el comportamiento de un procesador 8086 y permite depurar el codigo paso a paso, inspeccionar los registros y ver como interactua el codigo con la memoria.
+## Paradigma
+El paradigma del ensamblador 8086 es **imperativo** y **orientado a la arquitectura**. El programador controla directamente el flujo de ejecución, los registros y la memoria. Esto permite un alto nivel de optimización y eficiencia en el uso del hardware.
 
-### Funcionalidades del emulador emu8086:
+## Segmentación y Direcciones Físicas
 
-- **Simulacion completa del procesador 8086**: Incluye el comportamiento de los registros, memoria y la ejecucion de instrucciones.
-- **Depuracion paso a paso**: Permite ver la ejecucion del codigo linea por linea.
-- **Compatibilidad con sistemas modernos**: Aunque el 8086 es una arquitectura antigua, emu8086 permite ejecutar codigo 8086 en maquinas actuales con sistemas operativos como Windows.
-- **Visualizacion de registros y memoria**: Puedes observar como los valores cambian en los registros y en la memoria mientras se ejecuta el programa.
+El procesador 8086 utiliza **segmentación de memoria** para acceder a hasta 1 MB de memoria física, dividiéndola en segmentos de 64 KB cada uno. Los segmentos se combinan con un desplazamiento para calcular una dirección física:
 
-## Donde se ejecuta el emulador emu8086?
+### Dirección Lógica a Dirección Física
+La dirección física se calcula así:
+```
+Dirección Física = (Segmento × 16) + Desplazamiento
+```
+Por ejemplo:
+- Segmento: 0x1234
+- Desplazamiento: 0x5678
+- Dirección Física: (0x1234 × 16) + 0x5678 = 0x12340 + 0x5678 = 0x179B8
 
-emu8086 es compatible con sistemas operativos Windows. Puede ejecutarse en la mayoria de las versiones de Windows, lo que lo hace accesible para estudiantes y programadores interesados en aprender sobre la arquitectura de procesadores antiguos sin necesidad de hardware especifico.
+### Características de la Segmentación
+- Cada segmento puede contener hasta 64 KB.
+- Los registros de segmento (CS, DS, SS, ES) definen la ubicación base de un segmento.
+- Se pueden usar registros como SI y DI para especificar el desplazamiento dentro del segmento.
 
-## Por que aprender Assembly 8086?
+## Lectura del Hexadecimal
+El sistema hexadecimal utiliza 16 símbolos: 0-9 y A-F. Cada dígito hexadecimal representa 4 bits (un nibble). Por ejemplo:
 
-Aprender Assembly 8086 proporciona una comprension profunda de como funciona el hardware de una computadora a nivel basico. Aunque hoy en dia las arquitecturas modernas han reemplazado al 8086, los conceptos aprendidos siguen siendo relevantes, especialmente en la programacion de sistemas embebidos, la ingenieria inversa y el desarrollo de sistemas operativos.
+- Decimal: 255
+- Binario: 11111111
+- Hexadecimal: 0xFF
+
+En el 8086, las direcciones y valores suelen expresarse en hexadecimal para simplificar la representación de datos binarios.
