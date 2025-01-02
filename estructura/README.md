@@ -1,7 +1,5 @@
 # Estructura de un programa en assembly 8086
 
-En el procesador **8086**, la memoria se organiza utilizando un esquema de **segmentacion** en lugar de paginacion. Sin embargo, el concepto de **paginacion segmentada** se desarrollo en procesadores posteriores como el 80286 y el 80386 para manejar mejor la memoria. Aun asi, es util entender como funcionan los **segmentos** en el 8086, ya que es la base para el manejo de memoria.
-
 En el 8086, la **memoria** se divide en **segmentos** de hasta 64 KB, y se utilizan registros de segmento para acceder a estas regiones de memoria. Los segmentos permiten organizar el codigo, los datos y la pila, proporcionando una estructura logica que facilita el acceso y la proteccion de la memoria.
 
 ## Registros de Segmento en Assembly 8086
