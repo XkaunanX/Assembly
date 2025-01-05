@@ -1,101 +1,120 @@
-# Interrupciones Comunes en Assembly 8086
+# Interrupciones
 
-Las interrupciones son mecanismos que permiten que el procesador interrumpa su flujo de ejecucion normal para atender una solicitud especial, como la entrada/salida de datos o la gestion de errores. En Assembly 8086, las interrupciones mas comunes se usan para manejar funciones del sistema operativo y controlar dispositivos de hardware.
+Las interrupciones son mecanismos que permiten que el procesador interrumpa su flujo de ejecucion normal para atender una solicitud especial, como la entrada/salida de datos o la gestion de errores.
+
+### 2. Interrupciones de Software
+
+Las interrupciones de software son generadas por el propio programa mediante instrucciones específicas. Estas interrupciones son utilizadas para solicitar servicios del sistema operativo o realizar otras tareas críticas. A través de las interrupciones de software, los programas pueden ejecutar funciones que requieren acceso al sistema, como operaciones de entrada/salida o la gestión de recursos del sistema.
+
+```plaintext
++---------------------------+
+|     Usuario / Aplicación  |
++---------------------------+
+           |
+ (Interrupción de software)
+           |
+           v
++---------------------------+     (Llamada al sistema)
+|    Espacio de Usuario     |--------------------------+
++---------------------------+                          |
+           |                                           v
+           v                                   +---------------------------+
++---------------------------+                  |      Kernel (núcleo)      |
+|    Interrupción de        |----------------> |     Espacio del Kernel    |
+|     Software (Syscall)    |                  +---------------------------+
++---------------------------+                          |
+           |                                           |
+           v                                           v
++---------------------------+                  +---------------------------+
+|  Ejecución del Sistema    |                  |   Acceso a Hardware       |
+|  (funciones del sistema)  |                  +---------------------------+
++---------------------------+
+```
+
+### Vectores de Interrupción
+
+El 8086 tiene una tabla de vectores de interrupción, que es un conjunto de direcciones de memoria que apuntan a las rutinas encargadas de gestionar cada interrupción. Cada vector corresponde a un tipo de interrupción, y cuando se genera una interrupción, el procesador consulta esta tabla para determinar qué rutina debe ejecutarse.
+
+```plaintext
++---------------------------------------------------------------+
+| Tabla de Vectores de Interrupción del 8086                    |
++---------------------------------------------------------------+
+| Vector | Dirección de la Rutina de Interrupción                |
++---------------------------------------------------------------+
+| 0x00   | Dirección de la rutina para la interrupción 0x00     |
+| 0x01   | Dirección de la rutina para la interrupción 0x01     |
+| 0x02   | Dirección de la rutina para la interrupción 0x02     |
+| 0x03   | Dirección de la rutina para la interrupción 0x03     |
+| 0x04   | Dirección de la rutina para la interrupción 0x04     |
+| 0x05   | Dirección de la rutina para la interrupción 0x05     |
+| 0x06   | Dirección de la rutina para la interrupción 0x06     |
+| 0x07   | Dirección de la rutina para la interrupción 0x07     |
+| ...    | ...                                                   |
+| 0xFF   | Dirección de la rutina para la interrupción 0xFF     |
++---------------------------------------------------------------+
+```
+
+### Rutinas de Interrupción
+
+Cuando ocurre una interrupción, el procesador guarda el contexto actual de la ejecución y salta a la dirección de la rutina asociada con la interrupción correspondiente. Esta rutina es responsable de manejar el evento de la interrupción. Después de ejecutar la rutina, el procesador retorna al flujo de ejecución original, restaurando el contexto previo a la interrupción.
+
+```plaintext
++------------------+       +------------------+
+|    Nuevo         |------>|    Listo         |
++------------------+       +------------------+
+                                    |
+                                    v
+                           +------------------+         +------------------+
+                           |   En Ejecucion   |  -->    |   Terminado      |
+                           +------------------+         +------------------+
+                              |          ^
+                              v          |
+                           +------------------+
+                           |   Bloqueado      |
+                           +------------------+                      
+```
+
+## Proceso de Carga y Ejecución de una Interrupción en 8086
+
+### Cargar la Interrupción en AH
+Para ejecutar una interrupción en el 8086, primero se debe cargar el número de la interrupción en el registro **AH** o en un registro específico según la interrupción que se desea generar. El número de la interrupción generalmente corresponde a un valor entre 0 y 255, que es el identificador de la rutina de interrupción deseada.
+
+Por ejemplo, para cargar el número de la interrupción en AH:
+
+- El registro **AH** es utilizado para almacenar el número de la interrupción que se desea ejecutar.
+- El número de interrupción es almacenado en **AH**, mientras que **AL** y otros registros pueden usarse para pasar parámetros a la rutina de interrupción.
+
+### Ejecutar la Interrupción
+Una vez que el número de la interrupción se ha cargado en el registro **AH**, el siguiente paso es ejecutar la interrupción mediante la instrucción **`INT`** (Interrupt). La instrucción `INT` genera una interrupción software que consulta la tabla de vectores de interrupción para determinar la rutina que debe ser ejecutada.
+
+Cuando se ejecuta la instrucción `INT`, el procesador guarda su contexto actual (como los registros y el contador de programa) y salta a la dirección de memoria que está asociada al número de interrupción que se ha cargado previamente. Esta dirección está definida en la tabla de vectores de interrupción.
+
+La rutina de interrupción es responsable de manejar el evento (como una solicitud de entrada/salida, una operación matemática, etc.). Una vez que la rutina ha completado su tarea, el procesador retoma la ejecución normal del programa, restaurando el contexto que había guardado antes de la interrupción.
+
+### Ejemplo de Secuencia
+1. Cargar el número de la interrupción en AH (por ejemplo, cargar `0x21` para manejar una interrupción del sistema de E/S).
+2. Ejecutar la instrucción `INT` con el número cargado en AH.
+3. El procesador salta a la rutina de interrupción correspondiente.
+4. Una vez completada la rutina de interrupción, el procesador retorna al punto donde fue interrumpido.
+
+### Interrupciones assemby 8086
 
 1. **Interrupcion INT 21h**
-   - La interrupcion `INT 21h` es una de las mas comunes en el 8086 y se usa para realizar diversas funciones relacionadas con la entrada/salida, el manejo de archivos, y la gestion de memoria.
-   - Existen diferentes funciones que se activan al colocar un valor especifico en el registro `AH`.
-   - **Sintaxis:**
-     ```assembly
-     INT 21h  ; Llama a la interrupcion del DOS para realizar una operacion
-     ```
-   - **Algunas funciones comunes de `INT 21h`:**
-     - **AH = 01h**: Leer un caracter desde el teclado.
-       ```assembly
-       MOV AH, 01h
-       INT 21h  ; Lee un caracter del teclado
-       ```
-     - **AH = 02h**: Imprimir un caracter en la pantalla.
-       ```assembly
-       MOV AH, 02h
-       MOV DL, 'A'  ; Caracter a imprimir
-       INT 21h      ; Imprime el caracter en la pantalla
-       ```
-     - **AH = 4Ch**: Terminar el programa.
-       ```assembly
-       MOV AH, 4Ch
-       INT 21h  ; Termina el programa y regresa al sistema operativo
-       ```
+La interrupcion `INT 21h` es una de las mas comunes en el 8086 y se usa para realizar diversas funciones relacionadas con la entrada/salida, el manejo de archivos, y la gestion de memoria.
 
-2. **Interrupcion INT 10h**
-   - La interrupcion `INT 10h` se utiliza para funciones de video, como el cambio de modo grafico, la manipulacion del cursor, y la escritura en la pantalla.
-   - **Sintaxis:**
-     ```assembly
-     INT 10h  ; Llama a la interrupcion de video para realizar una operacion
-     ```
-   - **Algunas funciones comunes de `INT 10h`:**
-     - **AH = 00h**: Establecer el modo de video.
-       ```assembly
-       MOV AH, 00h
-       MOV AL, 03h  ; Modo de texto 80x25
-       INT 10h      ; Cambia al modo de video 80x25
-       ```
-     - **AH = 02h**: Mover el cursor.
-       ```assembly
-       MOV AH, 02h
-       MOV BH, 00h  ; Pagina de pantalla
-       MOV DH, 10h  ; Fila (linea)
-       MOV DL, 20h  ; Columna (caracter)
-       INT 10h      ; Mueve el cursor
-       ```
+Existen diferentes funciones que se activan al colocar un valor especifico en el registro `AH`.
 
-3. **Interrupcion INT 13h**
-   - La interrupcion `INT 13h` se usa para funciones relacionadas con discos duros, disquetes y la gestion de almacenamiento. Permite leer y escribir sectores en discos.
-   - **Sintaxis:**
-     ```assembly
-     INT 13h  ; Llama a la interrupcion de disco
-     ```
-   - **Algunas funciones comunes de `INT 13h`:**
-     - **AH = 02h**: Leer un sector desde un disco.
-       ```assembly
-       MOV AH, 02h
-       MOV AL, 01h  ; Numero de sectores a leer
-       MOV CH, 00h  ; Cilindro
-       MOV CL, 02h  ; Numero del sector
-       MOV DH, 00h  ; Cabeza del disco
-       MOV DL, 80h  ; Unidad de disco (por ejemplo, disco 0)
-       INT 13h      ; Lee un sector desde el disco
-       ```
+3. **Interrupcion INT 10h**
+La interrupcion `INT 10h` se utiliza para funciones de video, como el cambio de modo grafico, la manipulacion del cursor, y la escritura en la pantalla.
 
-4. **Interrupcion INT 14h**
-   - La interrupcion `INT 14h` se usa para manejar comunicaciones serie, como la lectura y escritura a traves de puertos serie (COM1, COM2, etc.).
-   - **Sintaxis:**
-     ```assembly
-     INT 14h  ; Llama a la interrupcion de comunicacion serial
-     ```
-   - **Algunas funciones comunes de `INT 14h`:**
-     - **AH = 00h**: Iniciar la comunicacion serial.
-       ```assembly
-       MOV AH, 00h
-       MOV BH, 00h  ; Configuracion del puerto COM
-       MOV DL, 01h  ; Puerto COM1
-       INT 14h      ; Inicia la comunicacion serial
-       ```
-     - **AH = 01h**: Leer un caracter desde el puerto serial.
-       ```assembly
-       MOV AH, 01h
-       INT 14h  ; Lee un caracter desde el puerto serial
-       ```
+4. **Interrupcion INT 13h**
+La interrupcion `INT 13h` se usa para funciones relacionadas con discos duros, disquetes y la gestion de almacenamiento. Permite leer y escribir sectores en discos.
 
-5. **Interrupcion INT 0Dh (Division por cero)**
-   - La interrupcion `INT 0Dh` es un tipo de interrupcion de **error**, que se activa cuando ocurre una division por cero, es decir, cuando un numero se intenta dividir por cero.
-   - El procesador interrumpe la ejecucion y transfiere el control a la rutina de manejo de errores asociada.
+5. **Interrupcion INT 14h**
+La interrupcion `INT 14h` se usa para manejar comunicaciones serie, como la lectura y escritura a traves de puertos serie (COM1, COM2, etc.).
 
-**Resumen:**
-- **INT 21h**: Usada para llamadas del sistema operativo como entrada/salida, gestion de archivos, y terminacion de programas.
-- **INT 10h**: Usada para funciones de video, como cambiar el modo de video y mover el cursor.
-- **INT 13h**: Usada para funciones de disco, como leer y escribir sectores.
-- **INT 14h**: Usada para manejar comunicaciones serie.
-- **INT 0Dh**: Activada en caso de errores, como la division por cero.
 
-Estas interrupciones permiten a los programadores interactuar con el sistema operativo, controlar dispositivos de hardware y manejar errores en sus programas.
+6. **Interrupcion INT 0Dh (Division por cero)**
+La interrupcion `INT 0Dh` es un tipo de interrupcion de **error**, que se activa cuando ocurre una division por cero, es decir, cuando un numero se intenta dividir por cero.
+El procesador interrumpe la ejecucion y transfiere el control a la rutina de manejo de errores asociada.
+
