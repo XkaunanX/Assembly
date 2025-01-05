@@ -10,23 +10,27 @@ Cuando se utiliza una instrucción de salto como `JMP`, la dirección de destino
 
 Si un salto está diseñado para avanzar en el programa, se calcula el desplazamiento sumando la diferencia entre la dirección de la etiqueta de destino y la dirección de la instrucción siguiente al `JMP`. Por ejemplo:
 
-- Dirección de la etiqueta de destino: `0000:0108`
-- Dirección de la instrucción siguiente al `JMP`: `0000:0105`
+```plaintext
+Dirección de la etiqueta de destino: `0000:0108`
+Dirección de la instrucción siguiente al `JMP`: `0000:0105`
 
 El desplazamiento se calcula como la diferencia entre estas direcciones: `0108 - 0105 = 0003h`.
 
 Por lo tanto, el salto hacia adelante se representaría con un desplazamiento de `0003h`.
+```
 
 ### Ejemplo de Salto hacia Atrás
 
 En el caso de un salto hacia atrás, el cálculo es similar, pero el desplazamiento será negativo. Por ejemplo:
 
-- Dirección de la etiqueta de destino: `0000:0100`
-- Dirección de la instrucción siguiente al `JMP`: `0000:0105`
+```plaintext
+Dirección de la etiqueta de destino: `0000:0100`
+Dirección de la instrucción siguiente al `JMP`: `0000:0105`
 
 El desplazamiento se calcula como la diferencia: `0100 - 0105 = FFFBh`.
 
 Esto representa un salto hacia atrás con un desplazamiento de `FFF Bh`.
+```
 
 ## Resumen
 
