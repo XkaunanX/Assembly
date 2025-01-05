@@ -1,6 +1,65 @@
-# Instrucciones de Assembly 8086
+# Instrucciones en Assembly 8086
 
-El lenguaje de ensamblador 8086 es el conjunto de instrucciones utilizado para programar en el microprocesador Intel 8086. Estas instrucciones permiten manipular directamente el hardware y ejecutar operaciones de bajo nivel.
+Este documento proporciona una introducción a las instrucciones en el lenguaje de ensamblador para la arquitectura 8086. Explica el ciclo de vida de una instrucción, las diferencias entre los tipos de arquitecturas CISC y RISC, conceptos clave como destino y fuente, además de ejemplos de **micródigo** y **traductores**.
+
+## ¿Qué es una Instrucción?
+
+En el contexto de la programación en ensamblador, una **instrucción** es una operación o comando que la CPU puede ejecutar. Cada instrucción en un programa de ensamblador se traduce en una operación básica, como mover datos, realizar cálculos, o controlar el flujo de ejecución. En el caso de la arquitectura 8086, las instrucciones operan sobre registros y memoria, y generalmente se representan mediante una secuencia de bytes en la memoria.
+
+## Ciclo de Vida de una Instrucción
+
+El ciclo de vida de una instrucción es el proceso completo de ejecución de una instrucción por parte de la CPU. Este ciclo generalmente consta de las siguientes fases:
+
+1. **Búsqueda (Fetch):** La CPU lee la instrucción desde la memoria.
+2. **Decodificación (Decode):** La CPU interpreta la instrucción, determinando qué operación debe realizar.
+3. **Ejecución (Execute):** La CPU ejecuta la operación especificada por la instrucción.
+4. **Acceso a Memoria (Memory Access):** Si la instrucción requiere leer o escribir datos en memoria, se realiza en esta fase.
+5. **Escritura de Resultados (Write-back):** Los resultados de la instrucción se escriben en los registros o en memoria.
+
+Este ciclo se repite continuamente a lo largo de la ejecución de un programa.
+
+## CISC vs RISC
+
+Las arquitecturas de computadoras se pueden clasificar principalmente en dos tipos: **CISC** (Complex Instruction Set Computing) y **RISC** (Reduced Instruction Set Computing).
+
+- **CISC (Complex Instruction Set Computing):** En una arquitectura CISC, como la 8086, las instrucciones son más complejas y pueden realizar múltiples operaciones en un solo ciclo de reloj. Esto significa que cada instrucción puede realizar tareas como cargar, almacenar y realizar operaciones aritméticas en un solo paso. Sin embargo, esto puede resultar en un mayor consumo de ciclos de reloj para cada instrucción y una mayor complejidad en la decodificación de instrucciones.
+
+- **RISC (Reduced Instruction Set Computing):** En una arquitectura RISC, las instrucciones son más simples y generalmente requieren un número constante de ciclos de reloj para ejecutarse. Cada instrucción realiza una única operación, lo que permite una ejecución más rápida en muchos casos, pero puede requerir más instrucciones para lograr tareas complejas.
+
+La arquitectura 8086 es un ejemplo de un diseño CISC, con un conjunto de instrucciones más complejo en comparación con los diseños RISC modernos.
+
+## Micródigo
+
+El **micródigo** es un conjunto de instrucciones de bajo nivel que describe cómo una instrucción de alto nivel, como las del lenguaje ensamblador, se traduce en operaciones de la CPU. En las arquitecturas CISC como la 8086, el micródigo es fundamental para descomponer una instrucción compleja en una serie de microoperaciones que se pueden ejecutar en los ciclos de reloj de la CPU.
+
+Por ejemplo, para la instrucción `MOV AX, 10`, el micródigo podría descomponerla en las siguientes microoperaciones:
+
+1. **Leer la instrucción** `MOV AX, 10` desde la memoria.
+2. **Decodificar la instrucción** para identificar que el valor 10 debe moverse al registro AX.
+3. **Escribir el valor 10** en el registro AX.
+
+En la práctica, el micródigo para una instrucción varía según el tipo de operación y la arquitectura específica de la CPU.
+
+## Traductores del Lenguaje
+
+Los **traductores** son programas que convierten el código fuente escrito en un lenguaje de alto nivel o en ensamblador a un formato que la CPU pueda ejecutar, generalmente código binario. En el caso de la arquitectura 8086, existen varios tipos de traductores:
+
+- **Ensambladores (Assembler):** Son los programas que traducen el código escrito en ensamblador a código de máquina. El ensamblador genera un archivo binario ejecutable, traduciendo cada instrucción de ensamblador en una secuencia de bytes que la CPU puede procesar directamente.
+  
+  Ejemplo de un ensamblador que puede usarse con la 8086 es **MASM (Microsoft Macro Assembler)**.
+
+- **Compiladores:** Aunque generalmente se asocian con lenguajes de alto nivel, los compiladores también pueden generar código de ensamblador para ser procesado por el ensamblador. Por ejemplo, un compilador C puede generar código ensamblador que luego será ensamblado y ejecutado por la CPU 8086.
+
+- **Enlazadores (Linkers):** Una vez que el código fuente se ha traducido en código de máquina, el enlazador se encarga de juntar los diferentes módulos generados por el ensamblador, resolviendo referencias a funciones y variables, para generar el archivo ejecutable final.
+
+## Destino y Fuente
+
+En el contexto de las instrucciones en assembly 8086, **fuente** y **destino** son términos que se utilizan para describir los operandos de una instrucción:
+
+- **Fuente:** Es el valor que se va a operar o copiar en la operación. Por ejemplo, en la instrucción `MOV AX, 10`, el valor `10` es la fuente.
+- **Destino:** Es el registro o la ubicación en memoria donde se almacenará el resultado de la operación. En la instrucción `MOV AX, 10`, el registro `AX` es el destino.
+
+Por lo tanto, en las instrucciones de ensamblador, la fuente y el destino son los componentes que especifican los operandos con los que se va a trabajar la CPU.
 
 ## Tipos de Instrucciones en Assembly 8086
 
@@ -8,86 +67,25 @@ Las instrucciones de ensamblador 8086 se pueden clasificar en diferentes tipos s
 
 # 1. Instrucciones de Datos
 
-Estas instrucciones permiten mover, cargar, almacenar y manipular datos en los registros o en la memoria. Permiten trabajar con los datos directamente.
+Estas instrucciones permiten mover, cargar, almacenar y manipular datos en los registros o en la memoria. Permiten trabajar con los datos directamente.  
+  
+**MOV**: Mueve datos de una fuente a un destino.
 
-- **MOV**: Mueve datos de una fuente a un destino.
-- **PUSH**: Coloca un valor en la pila.
-- **POP**: Extrae un valor de la pila.
+```plaintext
+MOV AX, 1234h       ; Cargar el valor 1234h en el registro AX
+MOV BX, 0x3000      ; Dirección de memoria en la RAM donde se va a guardar el valor
+MOV [BX], AX        ; Guardar el valor de AX en la RAM en la dirección 0x3000
+```
+**PUSH**: Coloca un valor en la pila.  
+**POP**: Extrae un valor de la pila.  
 
-# 2. Instrucciones de Control de Flujo (Saltos)
+```plaintext
+MOV AX, 1234h      ; Cargar el valor 1234h en el registro AX
+PUSH AX            ; Colocar el valor de AX en la pila
 
-Las instrucciones de control de flujo permiten alterar el orden de ejecución de las instrucciones, lo que permite crear bucles, saltos y tomar decisiones.
+MOV AX, 5678h      ; Cargar el valor 5678h en el registro AX
+PUSH AX            ; Colocar el valor de AX (5678h) en la pila
 
-- **JMP**: Realiza un salto incondicional a una dirección especificada.
-- **JE / JZ**: Realiza un salto si la bandera de cero está activada, es decir, si los dos valores comparados son iguales.
-- **JNE / JNZ**: Realiza un salto si la bandera de cero no está activada, es decir, si los dos valores comparados son diferentes.
-
-# 3. Instrucciones Aritméticas
-
-Estas instrucciones realizan operaciones matemáticas con los valores almacenados en los registros.
-
-- **ADD**: Suma dos valores.
-- **SUB**: Resta dos valores.
-- **MUL**: Multiplica dos valores.
-- **DIV**: Divide un valor entre otro.
-
-# 4. Instrucciones Lógicas
-
-Las instrucciones lógicas permiten realizar operaciones a nivel de bits, como AND, OR, XOR e invertir los bits de un registro con máscaras.
-
-- **AND**: Realiza una operación lógica AND entre dos valores.
-- **OR**: Realiza una operación lógica OR entre dos valores.
-- **XOR**: Realiza una operación lógica XOR entre dos valores.
-- **NOT**: Invierte todos los bits de un valor.
-
-#### Operaciones logicas y mascaras
-Una máscara es un valor binario utilizado para manipular bits específicos de un registro o una posición de memoria. Las máscaras se emplean para realizar operaciones como:
-
-- **Activación de bits:** Establecer uno o más bits en 1.
-- **Desactivación de bits:** Establecer uno o más bits en 0.
-- **Conmutación de bits:** Cambiar el estado de uno o más bits (de 1 a 0 o de 0 a 1).
-- **Prueba de bits:** Verificar si uno o más bits están en un estado específico.
-
-#### Operaciones Comunes con Máscaras
-Las máscaras se utilizan junto con operadores lógicos en ensamblador para manipular bits de manera controlada:
-
-##### 1. Activación de Bits (OR)
-Para activar bits específicos, se utiliza la operación **OR** (`OR`). Esta operación establece en 1 los bits indicados por la máscara, mientras deja los demás sin cambios.
-
-##### 2. Desactivación de Bits (AND)
-Para desactivar bits específicos, se utiliza la operación **AND** (`AND`) con el complemento de la máscara. Esto fuerza a 0 los bits indicados por la máscara, dejando los demás sin cambios.
-
-##### 3. Conmutación de Bits (XOR)
-Para cambiar el estado de bits específicos, se utiliza la operación **XOR** (`XOR`). Los bits indicados por la máscara se alternan entre 0 y 1, mientras que los demás permanecen sin cambios.
-
-##### 4. Prueba de Bits (AND)
-Para verificar el estado de bits específicos, se utiliza la operación **AND** (`AND`). Si el resultado es distinto de 0, significa que al menos uno de los bits indicados por la máscara estaba activo (en 1).
-
-#### Máscaras Comunes
-
-##### Máscara de 8 bits
-Supongamos que se desea manipular el registro **AL** (8 bits):
-
-- Máscara para activar los bits 0 y 3: `00001001` (0x09 en hexadecimal).
-- Máscara para desactivar los bits 1 y 2: `11111011` (0xFB en hexadecimal).
-- Máscara para conmutar los bits 7 y 6: `11000000` (0xC0 en hexadecimal).
-
-##### Máscara de 16 bits
-Si se trabaja con un registro de 16 bits como **AX**:
-
-- Máscara para activar los bits 15 y 14: `1100000000000000` (0xC000 en hexadecimal).
-- Máscara para desactivar los bits 7 y 0: `1111111011111110` (0xFEFE en hexadecimal).
-
-# 5. Instrucciones de Comparación
-
-Estas instrucciones comparan dos valores y establecen las banderas de la CPU en función del resultado de la comparación.
-
-- **CMP**: Compara dos valores.
-- **TEST**: Realiza una operación AND entre dos valores, pero solo afecta las banderas sin almacenar el resultado.
-
-# 6. Instrucciones de Entrada y Salida
-
-Estas instrucciones permiten leer y escribir datos en puertos de entrada y salida, facilitando la interacción con los dispositivos periféricos.
-
-- **IN**: Lee un byte desde un puerto de entrada.
-- **OUT**: Escribe un byte a un puerto de salida.
+POP BX             ; Extraer el valor de la pila y guardarlo en BX (será 5678h)
+POP AX             ; Extraer el siguiente valor de la pila y guardarlo en AX (será 1234h)
+``` 
