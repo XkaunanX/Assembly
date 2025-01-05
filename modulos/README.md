@@ -5,8 +5,6 @@ La instruccion `CALL` se utiliza para realizar una **llamada a una subrutina** o
 Cuando se ejecuta un `CALL`, el procesador hace lo siguiente:
       1. **Empuja la direccion de retorno** en la pila. Esta es la direccion de la instruccion que sigue a la llamada (`CALL`), para que luego se pueda regresar a ese punto de ejecucion.
       2. **Cambia el flujo de control** al inicio de la subrutina, haciendo que el procesador comience a ejecutar el codigo en la direccion de la subrutina indicada.
-      
-La sintaxis basica de `CALL` es:
 
 ```assembly
 CALL MiSubrutina   ; Llama a la subrutina MiSubrutina
@@ -18,7 +16,6 @@ Cuando se ejecuta un `RET`, el procesador realiza los siguientes pasos:
       1. **Extrae la direccion de retorno** desde la pila (la direccion que fue empujada por el `CALL`).
       2. **Ajusta el puntero de instruccion (IP)** a la direccion extraida, lo que hace que el procesador retome la ejecucion del programa justo despues de la llamada.
 Si se pasaron parametros a la subrutina a traves de la pila, se puede usar `RET N` para limpiar esos parametros de la pila, donde `N` es el numero de bytes que deben limpiarse.
-Ejemplo basico:
 
 ```assembly
 RET 4  ; Limpia 4 bytes de la pila (por ejemplo, si se pasaron 2 parametros de 2 bytes cada uno)
