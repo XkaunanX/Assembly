@@ -2,6 +2,39 @@
 
 Este conjunto de ejemplos demuestra como se utilizan los diferentes registros del procesador 8086. Los registros del 8086 se dividen en registros de proposito general, de segmento, de puntero, de indice y de estado. En estos ejemplos, se explica la funcion de cada uno de estos registros.
 
+```plaintext
++------------------+-----------------+------------------+------------------+
+|                           Registros de Datos                             |
++------------------+-----------------+------------------+------------------+
+| AX   | AH | AL   | BX   | BH | BL   | CX   | CH | CL  | DX   | DH | DL   |
++------------------+-----------------+------------------+------------------+
+| 16   | 8  | 8    | 16   | 8  | 8   | 16    | 8  | 8   | 16   | 8  | 8    |
++------------------+-----------------+------------------+------------------+
+
+
++-------------------------+---------------------------+
+| Registros de Puntero    | Registros de Segmento     |
++-------------------------+---------------------------+
+| SP (Stack Pointer)      | CS (Code Segment)         |
+| BP (Base Pointer)       | DS (Data Segment)         |
+| SI (Source Index)       | SS (Stack Segment)        |
+| DI (Destination Index)  | ES (Extra Segment)        |
++-------------------------+---------------------------+
+| 16 bits                 | 16 bits                   |
++-------------------------+---------------------------+
+
++---------------------------+
+| Registro de Estado        |
++---------------------------+
+| FLAGS                     |
+| Contiene indicadores como |
+| ZF (Zero Flag), CF (Carry)|
++---------------------------+
+| 16 bits                   |
++---------------------------+
+
+```
+
 ## Registros de Proposito General
 
 - **AX**: Acumulador, utilizado para operaciones aritmeticas y de entrada/salida.
