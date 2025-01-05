@@ -12,35 +12,33 @@ En el procesador 8086, los registros son de 16 bits, aunque algunos se pueden di
 Cada registro tiene un tamaño de 16 bits, permitiendo manejar valores entre 0 y 65,535 en decimal o 0x0000 a 0xFFFF en hexadecimal.
 
 ```plaintext
-+------------------+-----------------+------------------+------------------+
-|                           Registros de Datos                             |
-+------------------+-----------------+------------------+------------------+
-| AX   | AH | AL   | BX   | BH | BL   | CX   | CH | CL  | DX   | DH | DL   |
-+------------------+-----------------+------------------+------------------+
-| 16   | 8  | 8    | 16   | 8  | 8   | 16    | 8  | 8   | 16   | 8  | 8    |
-+------------------+-----------------+------------------+------------------+
 
+                        +-------------------------------------+
+                        |              8086                  |
+                        +-------------------------------------+
+                                 |        |       |
+            +-------------------+--------+-------+-------------------+
+            |                   |        |       |                   |
+    +---------------+    +---------------+   +---------------+   +---------------+
+    |    ALU        |    |    Registros  |   |    Bus de      |   |    Unidad de  |
+    | (Aritmetica y |    |   Propósito   |   |   Direcciones  |   |   Control     |
+    |  Logica)      |    |   General     |   |   y Datos      |   |               |
+    +---------------+    +---------------+   +---------------+   +---------------+
+            |                   |                   |                   |
+    +---------------+    +---------------+   +---------------+   +---------------+
+    |     Registros |    |     Registros |   |    Bus de      |   |    Interfaz   |
+    |  de Segmentos |    |  de Propósito |   |  Entrada/Salida|   |  Externa      |
+    |   (CS, DS, SS,|    |   (AX, BX, CX,|   |  (DMA, Puertos |   |   de Memoria  |
+    |    ES)        |    |   DX, SI, DI) |   |   de E/S)      |   |               |
+    +---------------+    +---------------+   +---------------+   +---------------+
+            |                       |
+    +---------------+        +----------------+
+    |   Unidad de   |        |    Controlador  |
+    |   Buses       |        |   de Interrup-  |
+    |   (Direccion, |        |   ciones y      |
+    |    Datos)     |        |   de Memoria    |
+    +---------------+        +----------------+
 
-+-------------------------+---------------------------+
-| Registros de Puntero    | Registros de Segmento     |
-+-------------------------+---------------------------+
-| SP (Stack Pointer)      | CS (Code Segment)         |
-| BP (Base Pointer)       | DS (Data Segment)         |
-| SI (Source Index)       | SS (Stack Segment)        |
-| DI (Destination Index)  | ES (Extra Segment)        |
-+-------------------------+---------------------------+
-| 16 bits                 | 16 bits                   |
-+-------------------------+---------------------------+
-
-+---------------------------+
-| Registro de Estado        |
-+---------------------------+
-| FLAGS                     |
-| Contiene indicadores como |
-| ZF (Zero Flag), CF (Carry)|
-+---------------------------+
-| 16 bits                   |
-+---------------------------+
 ```
 
 ## CISC
