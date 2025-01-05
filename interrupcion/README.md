@@ -97,7 +97,7 @@ La rutina de interrupción es responsable de manejar el evento (como una solicit
 3. El procesador salta a la rutina de interrupción correspondiente.
 4. Una vez completada la rutina de interrupción, el procesador retorna al punto donde fue interrumpido.
 
-## Lista de interrupciones comunes
+# Lista de interrupciones comunes
 
 ## 1. **Interrupción INT 21h**
 
