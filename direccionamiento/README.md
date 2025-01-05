@@ -1,7 +1,3 @@
-# Ejemplos de Tipos de Direccionamiento
-
-En estos ejemplos se muestran los diferentes tipos de direccionamiento que se pueden usar en Assembly 8086. Utilizamos el formato `.MODEL SMALL` para definir la estructura del programa y la segmentacion de memoria.
-
 ## Tipos de Direccionamiento
 
 1. **Directo**: Accede a una direccion de memoria especifica.
