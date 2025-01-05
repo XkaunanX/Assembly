@@ -35,7 +35,7 @@ Esto representa un salto hacia atrás con un desplazamiento de `FFF Bh`.
 ## Resumen
 
 - **Salto hacia adelante:** El desplazamiento es positivo.
-- **Salto hacia atrás:** El desplazamiento es negativo.
+- **Salto hacia atrás:** El desplazamiento es negativo. el número será negativo, y se representará en complemento a dos (en hexadecimal, el valor negativo se verá como un número grande, como FFFBh).
 
 ## Tipos de Saltos
 
