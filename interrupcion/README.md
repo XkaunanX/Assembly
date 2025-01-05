@@ -1,8 +1,8 @@
-## Interrupciones
+# Interrupciones
 
 Las interrupciones son mecanismos que permiten que el procesador interrumpa su flujo de ejecucion normal para atender una solicitud especial, como la entrada/salida de datos o la gestion de errores.
 
-### 2. Interrupciones de Software
+## Interrupciones de Software
 
 Las interrupciones de software son generadas por el propio programa mediante instrucciones específicas. Estas interrupciones son utilizadas para solicitar servicios del sistema operativo o realizar otras tareas críticas. A través de las interrupciones de software, los programas pueden ejecutar funciones que requieren acceso al sistema, como operaciones de entrada/salida o la gestión de recursos del sistema.
 
@@ -31,7 +31,7 @@ Las interrupciones de software son generadas por el propio programa mediante ins
 +---------------------------+
 ```
 
-### Vectores de Interrupción
+## Vectores de Interrupción
 
 El 8086 tiene una tabla de vectores de interrupción, que es un conjunto de direcciones de memoria que apuntan a las rutinas encargadas de gestionar cada interrupción. Cada vector corresponde a un tipo de interrupción, y cuando se genera una interrupción, el procesador consulta esta tabla para determinar qué rutina debe ejecutarse.
 
@@ -54,7 +54,7 @@ El 8086 tiene una tabla de vectores de interrupción, que es un conjunto de dire
 +---------------------------------------------------------------+
 ```
 
-### Rutinas de Interrupción
+## Rutinas de Interrupción
 
 Cuando ocurre una interrupción, el procesador guarda el contexto actual de la ejecución y salta a la dirección de la rutina asociada con la interrupción correspondiente. Esta rutina es responsable de manejar el evento de la interrupción. Después de ejecutar la rutina, el procesador retorna al flujo de ejecución original, restaurando el contexto previo a la interrupción.
 
@@ -74,7 +74,7 @@ Cuando ocurre una interrupción, el procesador guarda el contexto actual de la e
                            +------------------+                      
 ```
 
-### Proceso de Carga y Ejecución de una Interrupción en 8086
+## Proceso de Carga y Ejecución de una Interrupción en 8086
 
 #### Cargar la Interrupción en AH
 Para ejecutar una interrupción en el 8086, primero se debe cargar el número de la interrupción en el registro **AH** o en un registro específico según la interrupción que se desea generar. El número de la interrupción generalmente corresponde a un valor entre 0 y 255, que es el identificador de la rutina de interrupción deseada.
@@ -84,20 +84,20 @@ Por ejemplo, para cargar el número de la interrupción en AH:
 - El registro **AH** es utilizado para almacenar el número de la interrupción que se desea ejecutar.
 - El número de interrupción es almacenado en **AH**, mientras que **AL** y otros registros pueden usarse para pasar parámetros a la rutina de interrupción.
 
-#### Ejecutar la Interrupción
+### Ejecutar la Interrupción
 Una vez que el número de la interrupción se ha cargado en el registro **AH**, el siguiente paso es ejecutar la interrupción mediante la instrucción **`INT`** (Interrupt). La instrucción `INT` genera una interrupción software que consulta la tabla de vectores de interrupción para determinar la rutina que debe ser ejecutada.
 
 Cuando se ejecuta la instrucción `INT`, el procesador guarda su contexto actual (como los registros y el contador de programa) y salta a la dirección de memoria que está asociada al número de interrupción que se ha cargado previamente. Esta dirección está definida en la tabla de vectores de interrupción.
 
 La rutina de interrupción es responsable de manejar el evento (como una solicitud de entrada/salida, una operación matemática, etc.). Una vez que la rutina ha completado su tarea, el procesador retoma la ejecución normal del programa, restaurando el contexto que había guardado antes de la interrupción.
 
-#### Ejemplo de Secuencia
+### Ejemplo de Secuencia
 1. Cargar el número de la interrupción en AH (por ejemplo, cargar `0x21` para manejar una interrupción del sistema de E/S).
 2. Ejecutar la instrucción `INT` con el número cargado en AH.
 3. El procesador salta a la rutina de interrupción correspondiente.
 4. Una vez completada la rutina de interrupción, el procesador retorna al punto donde fue interrumpido.
 
-# Interrupciones 8086
+## Lista de interrupciones comunes
 
 ## 1. **Interrupción INT 21h**
 
