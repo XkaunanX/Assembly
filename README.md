@@ -11,6 +11,38 @@ En el procesador 8086, los registros son de 16 bits, aunque algunos se pueden di
 
 Cada registro tiene un tamaño de 16 bits, permitiendo manejar valores entre 0 y 65,535 en decimal o 0x0000 a 0xFFFF en hexadecimal.
 
+```plaintext
++------------------+-----------------+------------------+------------------+
+|                           Registros de Datos                             |
++------------------+-----------------+------------------+------------------+
+| AX   | AH | AL   | BX   | BH | BL   | CX   | CH | CL  | DX   | DH | DL   |
++------------------+-----------------+------------------+------------------+
+| 16   | 8  | 8    | 16   | 8  | 8   | 16    | 8  | 8   | 16   | 8  | 8    |
++------------------+-----------------+------------------+------------------+
+
+
++-------------------------+---------------------------+
+| Registros de Puntero    | Registros de Segmento     |
++-------------------------+---------------------------+
+| SP (Stack Pointer)      | CS (Code Segment)         |
+| BP (Base Pointer)       | DS (Data Segment)         |
+| SI (Source Index)       | SS (Stack Segment)        |
+| DI (Destination Index)  | ES (Extra Segment)        |
++-------------------------+---------------------------+
+| 16 bits                 | 16 bits                   |
++-------------------------+---------------------------+
+
++---------------------------+
+| Registro de Estado        |
++---------------------------+
+| FLAGS                     |
+| Contiene indicadores como |
+| ZF (Zero Flag), CF (Carry)|
++---------------------------+
+| 16 bits                   |
++---------------------------+
+```
+
 ## CISC
 El 8086 pertenece a la arquitectura **CISC** (*Complex Instruction Set Computer*). Sus características principales son:
 
@@ -24,11 +56,15 @@ El paradigma del ensamblador 8086 es **imperativo** y **orientado a la arquitect
 
 ## Segmentación y Direcciones Físicas
 
-El procesador 8086 utiliza **segmentación de memoria** para acceder a hasta 1 MB de memoria física, dividiéndola en segmentos de 64 KB cada uno. Los segmentos se combinan con un desplazamiento para calcular una dirección física:
+El procesador 8086 utiliza **segmentación de memoria** para acceder a hasta 1 MB (2^20 direcciones) de memoria física, dividiéndola en segmentos de 64 KB (2^16 direcciones) cada uno. Los segmentos se combinan con un desplazamiento para calcular una dirección física:
+
+### Dirección lógica**: En el 8086, la dirección lógica consiste en un par de valores:
+   - Segmento (16 bits)
+   - Desplazamiento (offset, 16 bits)
 
 ### Dirección Lógica a Dirección Física
 La dirección física se calcula así:
-```
+```plaintext
 Dirección Física = (Segmento × 16) + Desplazamiento
 ```
 Por ejemplo:
